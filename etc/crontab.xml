@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="madmytrych_novapost">
+        <job name="madmytrych_novapost_city_update" instance="Madmytrych\NovaPost\Cron\CityUpdate" method="execute">
+            <schedule>0 3 * * *</schedule>
+        </job>
+        <job name="madmytrych_novapost_warehouse_update" instance="Madmytrych\NovaPost\Cron\WarehouseUpdate" method="execute">
+            <schedule>30 3 * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,46 @@
+{
+    "madmytrych_novapost_city": {
+        "column": {
+            "entity_id": true,
+            "ref": true,
+            "settlement_type": true,
+            "description": true,
+            "area": true,
+            "area_description": true,
+            "settlement_type_description": true,
+            "updated_at": true,
+            "city_id": true
+        },
+        "index": {
+            "MADMYTRYCH_NOVAPOST_CITY_DESCRIPTION": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MADMYTRYCH_NOVAPOST_CITY_REF": true
+        }
+    },
+    "madmytrych_novapost_warehouse": {
+        "column": {
+            "entity_id": true,
+            "ref": true,
+            "description": true,
+            "settlement_type": true,
+            "site_key": true,
+            "short_address": true,
+            "type_of_warehouse": true,
+            "number": true,
+            "city_ref": true,
+            "city_description": true,
+            "longitude": true,
+            "latitude": true,
+            "updated_at": true
+        },
+        "index": {
+            "FTI_BF9759BE331AD977866A362D80576B97": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MADMYTRYCH_NOVAPOST_WAREHOUSE_SITE_KEY": true
+        }
+    }
+}

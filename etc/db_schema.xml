@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="madmytrych_novapost_city" resource="default" engine="innodb" comment="">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="varchar" name="ref" nullable="false"/>
+        <column xsi:type="varchar" name="settlement_type" nullable="false" />
+        <column xsi:type="varchar" name="description" nullable="false" comment="city or village"/>
+        <column xsi:type="varchar" name="area" nullable="false"/>
+        <column xsi:type="varchar" name="area_description" nullable="false"/>
+        <column xsi:type="varchar" name="settlement_type_description" nullable="false"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <column xsi:type="int" name="city_id" unsigned="true" nullable="false" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MADMYTRYCH_NOVA_POST_CITY_UNIQUE_REF">
+            <column name="ref"/>
+        </constraint>
+        <index referenceId="MADMYTRYCH_NOVA_POST_CITY_DESCRIPTION" indexType="fulltext">
+            <column name="description"/>
+        </index>
+    </table>
+    <table name="madmytrych_novapost_warehouse" resource="default" engine="innodb" comment="">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="varchar" name="ref" nullable="false"/>
+        <column xsi:type="varchar" name="description" nullable="false"/>
+        <column xsi:type="varchar" name="settlement_type" nullable="false"/>
+        <column xsi:type="decimal" name="site_key" nullable="false"/>
+        <column xsi:type="varchar" name="short_address" nullable="false"/>
+        <column xsi:type="varchar" name="type_of_warehouse" nullable="false"/>
+        <column xsi:type="int" name="number" nullable="false"/>
+        <column xsi:type="varchar" name="city_ref" nullable="false"/>
+        <column xsi:type="varchar" name="city_description" nullable="false"/>
+        <column xsi:type="varchar" name="longitude"  nullable="false"/>
+        <column xsi:type="varchar" name="latitude"  nullable="false"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MADMYTRYCH_NOVA_POST_WAREHOUSE_UNIQUE_REF">
+            <column name="site_key"/>
+        </constraint>
+        <index referenceId="MADMYTRYCH_NOVA_POST_WAREHOUSE_DESCRIPTION" indexType="fulltext">
+            <column name="description"/>
+            <column name="city_description"/>
+        </index>
+    </table>
+</schema>

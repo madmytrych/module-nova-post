@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="city" xsi:type="array">
+                                                                    <item name="displayArea" xsi:type="string">
+                                                                        shippingAdditional
+                                                                    </item>
+                                                                    <item name="sortOrder" xsi:type="number">65</item>
+                                                                    <item name="component" xsi:type="string">
+                                                                        Madmytrych_NovaPost/js/form/element/input-city
+                                                                    </item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="elementTmpl" xsi:type="string">
+                                                                            Madmytrych_NovaPost/form/element/city-input
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="telephone" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="number">55</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="tooltip" xsi:type="array">
+                                                                            <item name="description" xsi:type="string"
+                                                                                  translate="true">For delivery
+                                                                                questions.
+                                                                            </item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="mad-novapost-form" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="number">75</item>
+                                                                    <!--                                                                    <item name="component" xsi:type="string">Madmytrych_NovaPost/js/view/shipping-nova-post</item>-->
+                                                                    <item name="displayArea" xsi:type="string">
+                                                                        shipping-method-after
+                                                                    </item>
+                                                                    <!--                                                                    <item name="config" xsi:type="array">-->
+                                                                    <!--                                                                        <item name="template" xsi:type="string">Madmytrych_NovaPost/novapost-form</item>-->
+                                                                    <!--                                                                    </item>-->
+                                                                </item>
+                                                                <!--                                                                <item name="street" xsi:type="array">-->
+                                                                <!--                                                                    <item name="displayArea" xsi:type="string">shippingAdditional</item>-->
+                                                                <!--                                                                    <item name="sortOrder" xsi:type="number">70</item>-->
+                                                                <!--                                                                    <item name="component" xsi:type="string">Madmytrych_NovaPost/js/form/element/input-street</item>-->
+                                                                <!--                                                                    <item name="config" xsi:type="array">-->
+                                                                <!--                                                                        <item name="elementTmpl" xsi:type="string">Madmytrych_NovaPost/form/element/input</item>-->
+                                                                <!--                                                                    </item>-->
+                                                                <!--                                                                </item>-->
+
+                                                            </item>
+                                                        </item>
+                                                        <!--                                                        <item name="mad-novapost-form" xsi:type="array">-->
+                                                        <!--                                                            <item name="component" xsi:type="string">Madmytrych_NovaPost/js/view/shipping-nova-post</item>-->
+                                                        <!--                                                            <item name="displayArea" xsi:type="string">shipping-method-after</item>-->
+                                                        <!--                                                            <item name="config" xsi:type="array">-->
+                                                        <!--                                                                <item name="template" xsi:type="string">Madmytrych_NovaPost/novapost-form</item>-->
+                                                        <!--                                                            </item>-->
+                                                        <!--                                                        </item>-->
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

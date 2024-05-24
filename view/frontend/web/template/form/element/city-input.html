@@ -1,0 +1,45 @@
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<!-- ko if: isNovaPostMethodSelected() -->
+<input class="admin__control-text" type="text"
+       data-bind="
+        mageInit: {'novaPostSearch':{
+       'formSelector':uid,
+       'minSearchLength': 3,
+       'destinationSelector':'#city_results'}
+        },
+        event: {change: userChanges},
+        value: value,
+        hasFocus: focused,
+        valueUpdate: valueUpdate,
+        attr: {
+            'data-city-ref': cityRef(),
+            'data-region-name': regionName(),
+            name: inputName,
+            placeholder: placeholder,
+            'aria-describedby': noticeId,
+            id: uid,
+            maxlength: 255
+    }"/>
+<div id="city_results" class="search-autocomplete"></div>
+<!-- /ko -->
+<!-- ko ifnot: isNovaPostMethodSelected() -->
+<input class="admin__control-text" type="text"
+       data-bind="
+        event: {change: userChanges},
+        value: value,
+        hasFocus: focused,
+        valueUpdate: valueUpdate,
+        attr: {
+            name: inputName,
+            placeholder: placeholder,
+            'aria-describedby': noticeId,
+            id: uid,
+            disabled: disabled,
+            maxlength: 255
+    }"/>
+<!-- /ko -->

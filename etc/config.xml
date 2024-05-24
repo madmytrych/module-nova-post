@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <madmytrych_novapost>
+                <active>0</active>
+                <title>Nova Post</title>
+                <name>Warehouse Delivery</name>
+                <sallowspecific>0</sallowspecific>
+                <sort_order>100</sort_order>
+                <shipping_cost>100</shipping_cost>
+                <model>Madmytrych\NovaPost\Model\Carrier\NovaPost</model>
+                <api_url>https://api.novaposhta.ua/v2.0/json/</api_url>
+            </madmytrych_novapost>
+        </carriers>
+        <customer>
+            <address>
+                <street_lines>1</street_lines>
+                <company_show>NULL</company_show>
+                <fax_show/>
+            </address>
+        </customer>
+        <general>
+        <country>
+            <optional_zip_countries>UA</optional_zip_countries>
+            <allow>UA</allow>
+            <default>UA</default>
+        </country>
+        </general>
+    </default>
+</config>

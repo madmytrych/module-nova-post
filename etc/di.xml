@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Madmytrych_NovaPost
+ * MIT license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Madmytrych\NovaPost\Api\Data\WarehouseInterface"
+                type="Madmytrych\NovaPost\Model\Warehouse"/>
+    <preference for="Madmytrych\NovaPost\Api\Data\CityInterface" type="Madmytrych\NovaPost\Model\City"/>
+    <preference for="Madmytrych\NovaPost\Api\CityRepositoryInterface"
+                type="Madmytrych\NovaPost\Model\ResourceModel\CityRepository"/>
+    <preference for="Madmytrych\NovaPost\Api\WarehouseRepositoryInterface"
+                type="Madmytrych\NovaPost\Model\ResourceModel\WarehouseRepository"/>
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="checkout_madmytrych_novapost_shipping"
+                type="Madmytrych\NovaPost\Plugin\Checkout\LayoutProcessorPlugin" sortOrder="1000"/>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="novaPostTablesFillOut"
+                      xsi:type="object">Madmytrych\NovaPost\Console\Command\TablesFillOut</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
