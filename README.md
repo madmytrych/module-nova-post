@@ -1,5 +1,5 @@
 # Madmytrych Nova Post
-![Madmytrych Nova Post](https://img.shields.io/badge/version-1.0.2-green.svg)
+![Madmytrych Nova Post](https://img.shields.io/badge/version-1.0.3-green.svg)
 ## Description
 Nova Post shipping module for Magento 2.4.6
 
