@@ -5,11 +5,11 @@
  */
 declare(strict_types=1);
 
-namespace Madmytrych\NovaPost\Controller\Ajax;
+namespace Madmytrych\NovaPost\Controller\Ajax\Search;
 
-use Magento\Framework\App\Action\HttpGetActionInterface;
-use Madmytrych\NovaPost\Api\CityRepositoryInterface;
 use Madmytrych\NovaPost\Api\WarehouseRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\ResponseInterface;
@@ -17,15 +17,13 @@ use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\UrlInterface;
 
-class Search implements HttpGetActionInterface, HttpPostActionInterface
+class Warehouse implements HttpGetActionInterface, HttpPostActionInterface
 {
     /**
      * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param \Madmytrych\NovaPost\Api\CityRepositoryInterface $cityRepository
      * @param \Madmytrych\NovaPost\Api\WarehouseRepositoryInterface $warehouseRepository
      * @param \Magento\Framework\Controller\ResultFactory $resultFactory
      * @param \Magento\Framework\App\Request\Http $request
@@ -35,7 +33,6 @@ class Search implements HttpGetActionInterface, HttpPostActionInterface
      */
     public function __construct(
         private SearchCriteriaBuilder $searchCriteriaBuilder,
-        private CityRepositoryInterface $cityRepository,
         private WarehouseRepositoryInterface $warehouseRepository,
         private ResultFactory $resultFactory,
         private Http $request,
@@ -58,26 +55,12 @@ class Search implements HttpGetActionInterface, HttpPostActionInterface
             $norouteUrl = $this->url->getUrl('noroute');
             return $resultRedirect->setUrl($norouteUrl);
         }
-        if (!$this->request->getParam('name', false)) {
-            /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-            $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-            $resultRedirect->setUrl($this->urlInterface->getBaseUrl());
-            return $resultRedirect;
-        }
-        if ($this->request->getParam('name', false) === 'city') {
-            /** @var \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria */
-            $searchCriteria = $this->searchCriteriaBuilder
-                ->addFilter('description', '%' . $this->request->getParam('q') . '%', 'like')
-                ->create();
-            $items = $this->cityRepository->getList($searchCriteria)->getItems();
-        } else {
             /** @var \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria */
             $searchCriteria = $this->searchCriteriaBuilder
                 ->addFilter('city_ref', $this->request->getParam('cityRef'))
                 ->addFilter('description', '%' . $this->request->getParam('q') . '%', 'like')
                 ->create();
             $items = $this->warehouseRepository->getList($searchCriteria)->getItems();
-        }
         $responseData = [];
         foreach ($items as $item) {
             $responseData[] = $item->getData();

@@ -9,8 +9,9 @@
         data-bind="
         mageInit: {'novaPostSearch':{
        'formSelector':uid,
-        'dataRef': 'data-street-ref',
-       'minSearchLength': 1,
+       'dataRef':'data-street-ref',
+       'minSearchLength':1,
+       'url':'/novapost/ajax_search/warehouse',
        'destinationSelector':'#street_results'}
         },
         event: {change: userChanges},

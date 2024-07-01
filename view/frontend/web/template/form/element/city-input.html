@@ -9,7 +9,8 @@
        data-bind="
         mageInit: {'novaPostSearch':{
        'formSelector':uid,
-       'minSearchLength': 3,
+       'minSearchLength':3,
+       'url':'/novapost/ajax_search/city',
        'destinationSelector':'#city_results'}
         },
         event: {change: userChanges},

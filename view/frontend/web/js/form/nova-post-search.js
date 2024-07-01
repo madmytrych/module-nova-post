@@ -27,7 +27,6 @@ define([
 
     $.widget('mage.quickSearch', {
         options: {
-            'url': '/novapost/ajax/search',
             autocomplete: 'off',
             minSearchLength: 3,
             responseFieldElements: 'ul li',
