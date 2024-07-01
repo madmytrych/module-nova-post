@@ -22,7 +22,7 @@ class City extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init(CityInterface::CITY_TABLE_NAME, CityInterface::CITY_ID);
+        $this->_init(CityInterface::CITY_TABLE_NAME, CityInterface::ENTITY_ID);
         $this->_useIsObjectNew = true;
     }
 }
