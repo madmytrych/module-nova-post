@@ -47,10 +47,10 @@ class CityRepository implements CityRepositoryInterface
     /**
      * Get by Nova Post City Id field (not entity_id)
      *
-     * @param string $cityId
+     * @param int $cityId
      * @return \Madmytrych\NovaPost\Model\City
      */
-    public function getByCityId(string $cityId): CityInterface
+    public function getByCityId(int $cityId): CityInterface
     {
         $cityModel = $this->cityFactory->create();
         $this->cityResourceModel->load($cityModel, $cityId, CityInterface::CITY_ID);

@@ -23,11 +23,11 @@ interface CityRepositoryInterface
     /**
      * Load by city id.
      *
-     * @param string $cityId
+     * @param int $cityId
      *
      * @return \Madmytrych\NovaPost\Api\Data\CityInterface
      */
-    public function getByCityId(string $cityId): Data\CityInterface;
+    public function getByCityId(int $cityId): Data\CityInterface;
 
     /**
      * Get list by searchcriteria.
