@@ -1,0 +1,50 @@
+# Madmytrych_NovaPost
+# MIT license
+type Query {
+    cityNovaPost (
+    city: String @doc(description: "Part of a city name")
+    ): CityNovaPost
+    @resolver(class: "Madmytrych\\NovaPost\\Model\\Resolver\\City\\CityNovaPost")
+    @doc(description: "Return cities list by provided query")
+    @cache(cacheIdentity: "Madmytrych\\NovaPost\\Model\\Resolver\\City\\CityNovaPostIdentity")
+    warehouseNovaPost (
+    cityRef: String @doc(description: "city Ref code"),
+    description: String @doc(description: "description of the warehouse")
+    ): WarehouseNovaPost
+    @resolver(class: "Madmytrych\\NovaPost\\Model\\Resolver\\Warehouse\\WarehouseNovaPost")
+    @doc(description: "Return warehouses list by provided query")
+    @cache(cacheIdentity: "Madmytrych\\NovaPost\\Model\\Resolver\\City\\CityNovaPostIdentity")
+}
+
+type CityNovaPost @doc(description: "Contains an array of found cities") {
+    cities: [City] @doc(description: "An array of cities")
+}
+type WarehouseNovaPost @doc(description: "Contains an array of found warehouses") {
+    warehouses: [Warehouse] @doc(description: "An array of warehouses")
+}
+
+type City @doc(description: "Contains details about a specific city") {
+    entity_id: String @doc(description: "The city identifier")
+    ref: String @doc(description: "The city ref")
+    settlement_type: String @doc(description: "The settlement type")
+    description: String @doc(description: "The city description")
+    area: String @doc(description: "The city area")
+    area_description: String @doc(description: "The city area description")
+    settlement_type_description: String @doc(description: "The city settlement type description")
+    updated_at: String @doc(description: "Last updating of the city in DB")
+}
+type Warehouse @doc(description: "Contains details about a specific warehouse") {
+    entity_id: String @doc(description: "The warehouse identifier")
+    ref: String @doc(description: "The warehouse ref")
+    description: String @doc(description: "The warehouse description")
+    settlement_type: String @doc(description: "The warehouse settlement type")
+    site_key: String @doc(description: "The warehouse site key")
+    short_address: String @doc(description: "The warehouse short address")
+    type_of_warehouse: String @doc(description: "The warehouse type")
+    number: String @doc(description: "The warehouse number")
+    city_ref: String @doc(description: "The warehouse's city ref")
+    city_description: String @doc(description: "The warehouse's city description")
+    longitude: String @doc(description: "The warehouse longitude")
+    latitude: String @doc(description: "The warehouse latitude")
+    updated_at: String @doc(description: "Last updating of the warehouse in DB")
+}
