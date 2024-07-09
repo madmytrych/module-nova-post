@@ -6,12 +6,13 @@ define([
     'jquery',
     'underscore',
     'mage/template',
+    'mage/storage',
     'matchMedia',
     'Madmytrych_NovaPost/js/model/shipping-nova-post',
     'jquery-ui-modules/widget',
     'jquery-ui-modules/core',
     'mage/translate'
-], function ($, _, mageTemplate, mediaCheck, novaPostModel) {
+], function ($, _, mageTemplate, storage, mediaCheck, novaPostModel) {
     'use strict';
 
     /**
@@ -20,8 +21,7 @@ define([
      * @param {String} value - Value to check.
      * @returns {Boolean}
      */
-    function isEmpty(value)
-    {
+    function isEmpty(value) {
         return value.length === 0 || value == null || /^\s+$/.test(value);
     }
 
@@ -35,8 +35,8 @@ define([
             dataRegion: 'data-region-ref',
             template:
                 '<li id="qs-option-<%- data.index %>" ' +
-                 'data-city-ref="<%- data.ref %>" ' +
-                 'data-region-ref="<%- data.area_description %>" ' +
+                'data-city-ref="<%- data.ref %>" ' +
+                'data-region-ref="<%- data.area_description %>" ' +
                 'role="option">' +
                 '<span class="qs-option-name">' +
                 '<%- data.description %> <% if(!data.city_ref){ %>(<%- data.area_description %> обл.)<% } %>' +
@@ -110,6 +110,7 @@ define([
                 this._updateAriaHasPopup(false);
             }, this));
         },
+
         getDataRefName: function () {
             return this.dataRef;
         },
@@ -209,7 +210,7 @@ define([
                     case 'city':
                         novaPostModel.cityRef(selectedElement.attr(this.options.dataRef))
                             .cityName(selectedElement.find('.qs-option-name').text())
-                           .regionName(selectedElement.attr(this.options.dataRegion));
+                            .regionName(selectedElement.attr(this.options.dataRegion));
                         $(this.options.regionNameInput).val(selectedElement.attr(this.options.dataRegion));
                         break;
                     case 'street[0]':
@@ -220,9 +221,8 @@ define([
                 }
             } else {
                 novaPostModel.cityName('')
-                   .cityRef('')
-                   .regionName('')
-                ;
+                    .cityRef('')
+                    .regionName('');
             }
         },
 
@@ -304,9 +304,8 @@ define([
                     return true;
             }
         },
-
         /**
-         * Executes when the value of the search input field changes. Executes a GET request
+         * Executes when the value of the search input field changes. Executes a GraphQL request
          * to populate a suggestion list based on entered text. Handles click (select), hover,
          * and mouseout events on the populated suggestion list dropdown.
          * @private
@@ -315,53 +314,52 @@ define([
             var searchField = this.element,
                 clonePosition = {
                     position: 'absolute',
-                    // Removed to fix display issues
-                    // left: searchField.offset().left,
-                    // top: searchField.offset().top + searchField.outerHeight(),
                     width: searchField.outerWidth()
-            },
+                },
                 source = this.options.template,
                 template = mageTemplate(source),
                 dropdown = $('<ul role="listbox"></ul>'),
                 value = this.element.val(),
                 name = this.element.attr('name'),
-                cityRef = this.element.attr('data-city-ref') ?? '';
+                cityRef = this.element.attr('data-city-ref') ?? '',
+                isWarehouseContext = !!this.options.warehouseWidget;
 
             if (value.length >= parseInt(this.options.minSearchLength, 10)) {
-
+                var query;
+                // Determine the appropriate query based on the presence of isWarehouseContext
+                if (isWarehouseContext) {
+                    query = this.getWarehousesQuery(cityRef, value);
+                } else {
+                    query = this.getCitiesQuery(value);
+                }
                 if (this.options.url !== '') { //eslint-disable-line eqeqeq
-                    $.getJSON(this.options.url, {
-                        q: value,
-                        name: name,
-                        cityRef: cityRef
-                    }, $.proxy(function (data) {
+                    $.getJSON(this.options.url, { query: query }, $.proxy(function (response) {
+                        var data;
+                        if (isWarehouseContext) {
+                                data = response.data.warehouseNovaPost.warehouses;
+                        } else {
+                            data = response.data.cityNovaPost.cities;
+                        }
                         if (data.length) {
                             $.each(data, function (index, element) {
                                 var html;
-
                                 element.index = index;
                                 html = template({
                                     data: element
                                 });
                                 dropdown.append(html);
                             });
-
                             this._resetResponseList(true);
-
                             this.responseList.indexList = this.autoComplete.html(dropdown)
                                 .css(clonePosition)
                                 .show()
                                 .find(this.options.responseFieldElements + ':visible');
-
                             this.element.removeAttr('aria-activedescendant');
-                            // this.element.removeAttr(this.options.dataRef);
-
                             if (this.responseList.indexList.length) {
                                 this._updateAriaHasPopup(true);
                             } else {
                                 this._updateAriaHasPopup(false);
                             }
-
                             this.responseList.indexList
                                 .on('click', function (e) {
                                     this.responseList.selected.trigger('keypress');
@@ -396,8 +394,44 @@ define([
                 this.autoComplete.hide();
                 this._updateAriaHasPopup(false);
                 this.element.removeAttr('aria-activedescendant');
-                // this.element.removeAttr(this.options.dataRef);
             }
+        },
+        /**
+         * Define the GraphQL query for cities
+         * @param value
+         * @returns string
+         */
+        getCitiesQuery: function (value) {
+            return `
+            {
+                cityNovaPost(city: "${value}") {
+                  cities {
+                    ref,
+                    description,
+                    area_description
+                  }
+                }
+            }`;
+        },
+        /**
+         * Define the GraphQL query for warehouses
+         *
+         * @param cityRef
+         * @param description
+         * @returns string
+         */
+        getWarehousesQuery: function (cityRef, description) {
+            return `
+            {
+                warehouseNovaPost(cityRef: "${cityRef}", description: "${description}") {
+                  warehouses {
+                    city_ref,
+                    description,
+                    type_of_warehouse,
+                    number
+                  }
+                }
+            }`;
         }
     });
 
