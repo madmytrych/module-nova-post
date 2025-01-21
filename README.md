@@ -25,4 +25,4 @@ bin/magento novapost:tables:fillout
 ```
 ## License
 
-[MIT](LICENSE.txt) © [EMAIL](mailto:madmytrych@gmail.com)
+[MIT](LICENSE.txt) © [EMAIL](mailto:maksymdmytrychenko@gmail.com)
